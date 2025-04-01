@@ -1,16 +1,83 @@
 ---
+import EmojiGrid from '../components/EmojiGrid.astro';
 
+const links = [
+	{ emoji: '🎨', label: 'Analog Bodies', href: 'www.analogbodies.com' },
+	{ emoji: '✨', label: 'Projects', href: '/projects' },
+	{ emoji: '📝', label: 'Blog', href: '/blog' },
+	{ emoji: '🌟', label: 'About', href: '/about' },
+	{ emoji: '📮', label: 'Contact', href: '/contact' },
+	{ emoji: '🎵', label: 'Dream Linguist', href: 'dreamlinguist.beehiiv.com' },
+	{ emoji: '📚', label: 'Library', href: '/library' },
+	{ emoji: '🌈', label: 'Programming', href: 'www.willey.dev' },
+];
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>My Creative Space</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<main>
+			<h1>My Creative Space</h1>
+			<EmojiGrid links={links} />
+			<footer >Here is some text</footer>
+		</main>
 	</body>
 </html>
+
+<style>
+	:root {
+		--background: #111111;
+		--text: #ffffff;
+	}
+
+	html {
+		background-color: var(--background);
+		color: var(--text);
+		font-family: 'Inter', sans-serif;
+		height: 100%;
+	}
+
+	body {
+		margin: 0;
+		padding: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		min-height: 0; /* Important for flex child to shrink */
+		padding: 0 2rem;
+	}
+
+	h1 {
+		text-align: center;
+		font-size: 3rem;
+		margin: 2rem 0;
+		font-weight: 600;
+		background: linear-gradient(to right, #fff, #ccc);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		opacity: 0.9;
+		text-shadow: 0 2px 10px rgba(255,255,255,0.1);
+	}
+
+	@media (max-width: 768px) {
+		h1 {
+			font-size: 2rem;
+			margin: 1.5rem 0;
+		}
+	}
+</style>

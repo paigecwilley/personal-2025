@@ -1,0 +1,125 @@
+---
+interface EmojiLink {
+  emoji: string;
+  label: string;
+  href: string;
+}
+
+interface Props {
+  links: EmojiLink[];
+}
+
+const { links } = Astro.props;
+
+// Calculate grid dimensions with slightly more structure
+const numLinks = links.length;
+const cols = Math.ceil(Math.sqrt(numLinks * 0.85));
+const rows = Math.ceil(numLinks / cols);
+
+// Adjust cell sizes to fit viewport better, accounting for reduced height
+const cellWidth = 100 / cols;
+const cellHeight = (80 / rows); // Adjust this to account for the container's height
+
+const padding = 8;
+
+// Create a deterministic pattern using the index
+const enhancedLinks = links.map((link, index) => {
+  const row = Math.floor(index / cols);
+  const col = index % cols;
+  
+  // Use a deterministic pattern based on index for offsets
+  const angle = (index * Math.PI * 0.5) % (2 * Math.PI); // Creates a repeating pattern
+  const offsetScale = 0.3; // Scale of the offset
+  
+  // Calculate offsets using sine and cosine for a flowing pattern
+  const offsetX = (Math.cos(angle) * offsetScale * (cellWidth - padding * 2)) + padding;
+  const offsetY = (Math.sin(angle) * offsetScale * (cellHeight - padding * 2)) + padding;
+  
+  // Base position
+  const baseX = col * cellWidth;
+  const baseY = row * cellHeight;
+  
+  return {
+    ...link,
+    left: baseX + offsetX,
+    top: baseY + offsetY,
+  };
+});
+---
+
+<section class="emoji-section">
+  <div class="emoji-container">
+    {enhancedLinks.map((link) => (
+      <a 
+        href={link.href} 
+        class="emoji-link" 
+        title={link.label}
+        style={`
+          left: ${link.left}%;
+          top: ${link.top}%;
+        `}
+      >
+        <span class="emoji">{link.emoji}</span>
+        <span class="label">{link.label}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .emoji-section {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+  }
+
+  .emoji-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .emoji-link {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 1rem;
+    pointer-events: auto;
+  }
+
+  .emoji {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .label {
+    font-size: 0.9rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.4em 1em;
+    border-radius: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .emoji-section {
+      margin-bottom: 80px;
+    }
+    
+    .emoji {
+      font-size: 2.5rem;
+    }
+
+    .label {
+      font-size: 0.8rem;
+      padding: 0.3em 0.8em;
+    }
+  }
+</style>

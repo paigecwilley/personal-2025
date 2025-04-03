@@ -1,63 +1,28 @@
 ---
-interface Props {
-  frontmatter: {
-    title: string;
-    date: string;
-    description?: string;
-  }
-}
+import BaseLayout from './BaseLayout.astro';
 
 const { frontmatter } = Astro.props;
-const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-});
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{frontmatter.title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <main>
-      <article class="blog-post">
-        <header>
-          <h1>{frontmatter.title}</h1>
-          <time datetime={frontmatter.date}>{formattedDate}</time>
-          {frontmatter.description && <p class="description">{frontmatter.description}</p>}
-        </header>
-        <slot />
-      </article>
-    </main>
-  </body>
-</html>
+<BaseLayout title={`${frontmatter.title} - My Creative Space`}>
+  <main>
+    <article>
+      <header>
+        <h1>{frontmatter.title}</h1>
+        <time datetime={frontmatter.date}>
+          {new Date(frontmatter.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+      </header>
+      <slot />
+    </article>
+  </main>
+</BaseLayout>
 
 <style>
-  :root {
-    --background: #111111;
-    --text: #ffffff;
-  }
-
-  html {
-    background-color: var(--background);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
   main {
     flex: 1;
     padding: 2rem;
@@ -67,8 +32,8 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
     box-sizing: border-box;
   }
 
-  .blog-post {
-    line-height: 1.6;
+  article {
+    line-height: 1.8;
   }
 
   header {
@@ -76,7 +41,7 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
   }
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin: 0 0 1rem;
     background: linear-gradient(to right, #fff, #ccc);
     -webkit-background-clip: text;
@@ -89,34 +54,6 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
     font-size: 0.9rem;
   }
 
-  .description {
-    font-size: 1.1rem;
-    margin: 1rem 0 0;
-    color: #ccc;
-  }
-
-  /* Style the content within the blog post */
-  .blog-post :global(h2) {
-    font-size: 1.8rem;
-    margin: 2rem 0 1rem;
-    color: #fff;
-  }
-
-  .blog-post :global(p) {
-    margin: 1rem 0;
-  }
-
-  .blog-post :global(a) {
-    color: #fff;
-    text-decoration: underline;
-    text-decoration-color: rgba(255,255,255,0.3);
-    transition: text-decoration-color 0.2s;
-  }
-
-  .blog-post :global(a:hover) {
-    text-decoration-color: rgba(255,255,255,0.8);
-  }
-
   @media (max-width: 768px) {
     main {
       padding: 1rem;
@@ -124,6 +61,10 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
 
     h1 {
       font-size: 2rem;
+    }
+
+    header {
+      margin-bottom: 2rem;
     }
   }
 </style> 

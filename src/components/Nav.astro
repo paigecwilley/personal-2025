@@ -1,0 +1,92 @@
+---
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/', label: 'Home', emoji: '🏠' },
+  { href: '/blog', label: 'Blog', emoji: '📝' },
+];
+---
+
+<nav>
+  <div class="nav-links">
+    {links.map(link => (
+      <a 
+        href={link.href} 
+        class={currentPath === link.href ? 'active' : ''}
+      >
+        <span class="emoji">{link.emoji}</span>
+        <span class="label">{link.label}</span>
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  nav {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .nav-links {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+  }
+
+  a:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  a.active {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .emoji {
+    font-size: 1.2rem;
+  }
+
+  .label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      gap: 1rem;
+    }
+
+    a {
+      padding: 0.4rem 0.8rem;
+    }
+
+    .label {
+      display: none;
+    }
+
+    .emoji {
+      font-size: 1.4rem;
+    }
+  }
+</style> 

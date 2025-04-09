@@ -3,7 +3,7 @@ import EmojiGrid from '../components/EmojiGrid.astro';
 
 const links = [
 	{ emoji: '🎐', label: 'Analog Bodies', href: 'https://www.analogbodies.com' },
-	{ emoji: '📝', label: 'Blog', href: '/blog' },
+	{ emoji: '📝', label: 'Posts', href: '/posts' },
 	// { emoji: '🎨', label: 'Art Gallery', href: '/art' },
 	// { emoji: '🌟', label: 'About', href: '/about' },
 	// { emoji: '📮', label: 'Contact', href: '/contact' },
@@ -19,16 +19,15 @@ const links = [
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
-		<title>My Creative Space</title>
+		<title>Code(x) and Curiosities from Paige Willey</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 	</head>
 	<body>
 		<main>
-			<h1>My Creative Space</h1>
+			<h1>Code(x) and Curiosities</h1>
 			<EmojiGrid links={links} />
-			<footer >Here is some text</footer>
 		</main>
 	</body>
 </html>
@@ -59,7 +58,7 @@ const links = [
 		display: flex;
 		flex-direction: column;
 		min-height: 0; /* Important for flex child to shrink */
-		padding: 0 2rem;
+		padding: 3rem 3rem;
 	}
 
 	h1 {
